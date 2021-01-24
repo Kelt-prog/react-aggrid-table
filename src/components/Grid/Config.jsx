@@ -21,7 +21,6 @@ function compareValues(params) {
 const baseSymbol = {
     headerName: 'Base Symbol',
     field: 'baseSymbol',
-    cellRenderer: 'iconRenderer',
     sortable: true,
     filter: true,
 };
@@ -29,7 +28,6 @@ const baseSymbol = {
 const quoteSymbol = {
     headerName: 'Quote Symbol',
     field: 'quoteSymbol',
-    cellRenderer: 'iconRenderer',
     sortable: true,
     filter: true,
 };

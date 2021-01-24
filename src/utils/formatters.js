@@ -17,7 +17,6 @@ function numberFormatter(number) {
 }
 
 export function numberForDisplay(params) {
-    console.log('para', params);
     const newValue = params.value
         ? new Intl.NumberFormat().format(params.value)
         : new Intl.NumberFormat().format(params);
