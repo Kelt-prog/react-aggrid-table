@@ -1,0 +1,103 @@
+import {
+    acronymFormatter,
+    currencyFormatter,
+    numberForDisplay,
+    rankNumberFormatter,
+    timeStampFormatter,
+} from '../../utils/formatters';
+
+function compareValues(params) {
+    if (params.oldValue > params.newValue) {
+        console.log(params.newValue);
+        return { color: 'green' };
+    }
+
+    if (params.oldValue < params.newValue) {
+        console.log(params.newValue);
+        return { color: 'red' };
+    }
+}
+
+const baseSymbol = {
+    headerName: 'Base Symbol',
+    field: 'baseSymbol',
+    cellRenderer: 'iconRenderer',
+    sortable: true,
+    filter: true,
+};
+
+const quoteSymbol = {
+    headerName: 'Quote Symbol',
+    field: 'quoteSymbol',
+    cellRenderer: 'iconRenderer',
+    sortable: true,
+    filter: true,
+};
+
+const exchangeId = {
+    headerName: 'Exchange ID',
+    field: 'exchangeId',
+    valueFormatter: acronymFormatter,
+    sortable: true,
+    filter: true,
+};
+
+const priceQuote = {
+    headerName: 'Price Quote',
+    field: 'priceQuote',
+    valueFormatter: currencyFormatter,
+    sortable: true,
+    filter: 'agNumberColumnFilter',
+    newValueHandler: compareValues,
+};
+
+const priceUSD = {
+    headerName: 'Price (USD)',
+    field: 'priceUsd',
+    valueFormatter: currencyFormatter,
+    sortable: true,
+    filter: 'agNumberColumnFilter',
+    newValueHandler: compareValues,
+};
+
+const rank = {
+    headerName: 'Rank',
+    field: 'rank',
+    sortable: true,
+    valueFormatter: rankNumberFormatter,
+    filter: 'agNumberColumnFilter',
+    comparator: function (number1, number2) {
+        if (number1 === null && number2 === null) {
+            return 0;
+        }
+        if (number1 === null) {
+            return -1;
+        }
+        if (number2 === null) {
+            return 1;
+        }
+        return number1 - number2;
+    },
+};
+
+const tradesCount24Hr = {
+    headerName: 'Trades Count',
+    field: 'tradesCount24Hr',
+    valueFormatter: numberForDisplay,
+    sortable: true,
+    filter: 'agNumberColumnFilter',
+    newValueHandler: compareValues,
+};
+
+const updated = {
+    headerName: 'Updated',
+    field: 'updated',
+    valueFormatter: timeStampFormatter,
+    sortable: true,
+    filter: 'agDateColumnFilter',
+    sort: 'desc',
+};
+
+export const columnDefs = [exchangeId, rank, baseSymbol, quoteSymbol, priceQuote, priceUSD, tradesCount24Hr, updated];
+
+export const defaultColDef = { resizable: true, enableCellChangeFlash: true };
